@@ -37,7 +37,7 @@ const Login = () => {
   const proceedLogin = (e) => {
     e.preventDefault();
     if (isValidate()) {
-      fetch(`http://localhost:8000/auth/jwt/create/`, {
+      fetch(`http://localhost:8000/api/accounts/auth/jwt/create/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

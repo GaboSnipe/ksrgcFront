@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('/auth/users/me/');
+        const response = await axios.get('/api/accounts/auth/users/me/');
         setUserObj(response?.data);
       } catch (error) {
         console.error('Error:', error);
