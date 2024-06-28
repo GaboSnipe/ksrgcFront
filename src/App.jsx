@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Login, Home } from "./pages"; // Подразумевается, что у вас есть компонент Home
+import { Login, Home } from "./pages";
 import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
