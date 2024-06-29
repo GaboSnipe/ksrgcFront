@@ -55,7 +55,7 @@ const DocSign = (selectedDoc) => {
                 },
             });
 
-            if (response.status === 201) {
+            if (response.status === 200) {
                 setDocumentNumber('');
                 setHaveToSign('');
                 toast.success('ვიზირებაზე გაგზავნილია');
@@ -71,7 +71,7 @@ const DocSign = (selectedDoc) => {
     const handleAddHaveToSign = (id) => {
         const selectedOption = options.find(option => option.id === id);
         if (selectedOption) {
-            setHaveToSign(selectedOption.email);
+            setHaveToSign(selectedOption);
             setHaveToSignSearch("");
         }
     };
@@ -101,7 +101,7 @@ const DocSign = (selectedDoc) => {
                         <div className="flex flex-wrap border rounded-lg px-3 py-2 mt-1 text-sm w-full p-4" style={{ backgroundColor: "#121212" }}>
                             {haveToSign && (
                                 <div className="relative flex items-center rounded text-white hover:bg-gray-800 text-xs">
-                                    <span className="flex ml-3 mr-1 text-xs">{haveToSign}</span>
+                                    <span className="flex ml-3 mr-1 text-xs">{haveToSign.email}</span>
                                     <button
                                         type="button"
                                         onClick={() => setHaveToSign('')}
