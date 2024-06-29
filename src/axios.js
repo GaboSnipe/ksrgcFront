@@ -1,22 +1,10 @@
 import axios from "axios";
 
-// Создаем экземпляр axios
 const instance = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://mysite-uoqd.onrender.com',
 });
 
-// Интерсептор для добавления токена в заголовки запросов
-instance.interceptors.request.use((config) => {
-  const token = window.localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `JWT ${token}`;
-  }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
 
-// Интерсептор для обработки ответов и обновления токенов при необходимости
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -32,7 +20,7 @@ instance.interceptors.response.use(
           return Promise.reject(error);
         }
         
-        const response = await axios.post('http://localhost:8000/api/accounts/auth/jwt/refresh-token/', { refresh });
+        const response = await axios.post('https://mysite-uoqd.onrender.com/api/accounts/auth/jwt/refresh', { refresh });
         const { access } = response.data;
         
         localStorage.setItem('token', access);
@@ -53,5 +41,16 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+instance.interceptors.request.use((config) => {
+  const token = window.localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `JWT ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
 
 export default instance;
