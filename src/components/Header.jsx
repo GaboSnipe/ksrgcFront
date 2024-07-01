@@ -29,15 +29,15 @@ const Header = ({selectedDoc}) => {
     className="navbar-bottom-menu border-y border-gray-800 bg-base-200 "
     style={{ height: "10vh", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}
   >
-    <div className="container text-base navlinks-container" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <button onClick={toggleAddDoc}>
-        <div className="collapse-title text-sm font-medium text-accent-content">დოკუმენტის დამატება</div>
+    <div className="container text-base navlinks-container py-1" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "inherit" }}>
+      <button onClick={toggleAddDoc} className="btn text-sm bg-transparent hover:bg-gray-800 px-4 h-full">
+        <div>დოკუმენტის დამატება</div>
       </button>
-      <button onClick={toggleSign}>
-        <div className="collapse-title text-sm font-medium text-accent-content">ხელმოწერაზე გაგზავნა</div>
+      <button onClick={toggleSign} className="btn text-sm bg-transparent hover:bg-gray-800 px-4 h-full">
+        <div>ხელმოწერაზე გაგზავნა</div>
       </button>
-      <button onClick={toggleVerify}>
-        <div className="collapse-title text-sm font-medium text-accent-content">ვიზირებაზე გაგზავნა</div>
+      <button onClick={toggleVerify} className="btn text-sm bg-transparent hover:bg-gray-800 px-4 h-full">
+        <div>ვიზირებაზე გაგზავნა</div>
       </button>
     </div>
   </div>
