@@ -34,10 +34,10 @@ const Header = ({selectedDoc}) => {
         <div className="collapse-title text-sm font-medium text-accent-content">დოკუმენტის დამატება</div>
       </button>
       <button onClick={toggleSign}>
-        <div className="collapse-title text-sm font-medium text-accent-content">send to sign</div>
+        <div className="collapse-title text-sm font-medium text-accent-content">ხელმოწერაზე გაგზავნა</div>
       </button>
       <button onClick={toggleVerify}>
-        <div className="collapse-title text-sm font-medium text-accent-content">send to verify</div>
+        <div className="collapse-title text-sm font-medium text-accent-content">ვიზირებაზე გაგზავნა</div>
       </button>
     </div>
   </div>

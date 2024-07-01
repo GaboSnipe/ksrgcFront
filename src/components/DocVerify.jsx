@@ -96,11 +96,11 @@ const DocVerify = ({ selectedDoc }) => {
     
     return (
         <div className="popup w-full md:w-3/4 rounded-lg shadow-lg p-4">
-            <h1 className="text-xl text-center text-accent-content mb-4">Send for Verification</h1>
+            <h1 className="text-xl text-center text-accent-content mb-4 mb-10">ვიზირებაზე გაგზავნა</h1>
             <div className="divide-y divide-slate-700">
-                <div className="grid grid-cols-5 gap-4 py-2 items-center">
-                    <label className="text-xl font-medium text-white-700 col-span-1">Document Number:</label>
-                    <div className="relative col-span-4">
+                <div className="grid grid-cols-2 gap-4 py-2 items-center">
+                    <label className="text-xl font-medium text-white-700 col-span-1 ml-5">დოკუმენტის &#8470;</label>
+                    <div className="relative col-span-1">
                         <div className="flex flex-wrap border rounded-lg px-3 py-2 mt-1 text-sm w-full p-4" style={{ backgroundColor: "#121212" }}>
                             {doc && (
                                 <div className="relative flex items-center rounded text-white hover:bg-gray-800 text-xs">
@@ -140,9 +140,9 @@ const DocVerify = ({ selectedDoc }) => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-5 gap-4 py-2 items-center">
-                    <label className="text-xl font-medium text-white-700 col-span-1">Recipient:</label>
-                    <div className="relative col-span-4">
+                <div className="grid grid-cols-2 gap-4 py-2 items-center">
+                    <label className="text-xl font-medium text-white-700 col-span-1 ml-5">მიმღები:</label>
+                    <div className="relative col-span-1">
                         <div className="flex flex-wrap border rounded-lg px-3 py-2 mt-1 text-sm w-full p-4" style={{ backgroundColor: "#121212" }}>
                             {haveToVerify && (
                                 <div className="relative flex items-center rounded text-white hover:bg-gray-800 text-xs">
@@ -186,7 +186,7 @@ const DocVerify = ({ selectedDoc }) => {
                     <button
                         type="button"
                         onClick={uploadDoc}
-                        className="btn bg-blue-600 hover:bg-green-600 text-white btn-sm mx-2"
+                        className="bg-transparent hover:bg-blue-500 text-gray-500 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded"
                     >
                         Send
                     </button>
