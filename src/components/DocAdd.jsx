@@ -137,7 +137,7 @@ const DocAdd = ({ setIsOpenAddDoc }) => {
     );
 
     return (
-        <div className="popup w-full md:w-3/4 rounded-lg shadow-lg p-4">
+        <div className="popup w-full md:w-3/4 rounded-lg shadow-lg p-4 bg-base-200">
             <h1 className="text-xl text-center text-accent-content mb-4">ახალი დოკუმენტის მომზადება</h1>
             <div className="divide-y divide-slate-700">
                 <div className="grid grid-cols-5 gap-4 py-2 items-center">

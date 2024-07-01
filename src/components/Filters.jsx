@@ -8,7 +8,7 @@ const Filters = () => {
   const [selectBrandList, setSelectBrandList] = useState(["all"]);
 
   return (
-    <Form className="bg-base-200 rounded-md px-8 py-4 flex flex-col gap-8 items-center">
+    <Form className="bg-base-200 rounded-t-md px-8 py-4 flex flex-col gap-8 items-center">
       <div className="flex flex-col w-full md:flex-row md:justify-center md:items-center gap-4">
         <FormInput
           type="search"
@@ -19,14 +19,7 @@ const Filters = () => {
           className="md:flex-1"
         />
         <FormDatePicker label="თარიღი" name="date" className="md:flex-1" />
-        <FormInput
-          type="search"
-          label="გამომგზავნელი"
-          name="search"
-          size="input-sm"
-          defaultValue=""
-          className="md:flex-1"
-        />
+        <FormDatePicker label="თარიღი" name="date" className="md:flex-1" />
       </div>
       <div className="flex justify-center w-full">
         <button

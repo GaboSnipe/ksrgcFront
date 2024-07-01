@@ -1,106 +1,161 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "../axios";
 
-const DocVerify = () => {
+const DocVerify = ({ selectedDoc }) => {
     const dispatch = useDispatch();
-    const [documentNumber, setDocumentNumber] = useState("");
+    const [doc, setDoc] = useState(selectedDoc || null);
+    const [docSearch, setDocSearch] = useState("");
+    const [haveToVerify, setHaveToVerify] = useState(null);
     const [haveToVerifySearch, setHaveToVerifySearch] = useState("");
-    const [haveToVerify, setHaveToVerify] = useState([]);
     const [isFocused, setIsFocused] = useState(false);
+    const [isFocusedDoc, setIsFocusedDoc] = useState(false);
     const fileInputRef = useRef(null);
-    const options = [
-        { id: 1, email: "user1@example.com" },
-        { id: 2, email: "user2@example.com" },
-        { id: 3, email: "user3@example.com" },
-        { id: 4, email: "user4@example.com" }
-    ];
-    const handleDocumentNumberChange = (e) => {
-        const value = e.target.value;
-        const regex = /^\d*\.?\d*$/;
-        if (regex.test(value)) {
-            setDocumentNumber(value);
-        }
-    };
+    const [docList, setDocList] = useState([]);
+    const [options, setOptions] = useState([]);
+    const [optionsDoc, setOptionsDoc] = useState([]);
+
+    useEffect(() => {
+        const getUsersList = async () => {
+            try {
+                const response = await axios.get('/api/accounts/list/');
+                setOptions(response.data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+        getUsersList();
+    }, []);
+
+    useEffect(() => {
+        axios.get('/api/eDocumentFlow/document/list/')
+            .then(response => {
+                setDocList(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
 
     const uploadDoc = async () => {
+        if (!doc || !haveToVerify) {
+            toast.error('Please select both a document and a recipient');
+            return;
+        }
+
         let docObj = new FormData();
-        docObj.append('documentNumber', documentNumber);
-        docObj.append('have_to_verify_users', haveToVerify);
+        docObj.append('document', doc.uuid);
+        docObj.append('recipient', haveToVerify.id);
 
         try {
-            const response = await axios.post('/api/eDocumentFlow/document/upload/', docObj, {
+            const response = await axios.post('/api/eDocumentFlow/document/send-to-verify/', docObj, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
 
-            if (response.status === 201) {
-                setDocumentNumber('');
-                setTitle('');
-                setComent('');
-                setOwner('');
-                setHaveToSign('');
-                setHaveToVerify([]);
-                setSelectedFile(null);
-                setSelectedFiles([]);
-                toast.success('ვიზირებაზე გაგზავნილია');
+            if (response.status === 200) {
+                setDoc(null);
+                setHaveToVerify(null);
+                toast.success('Document sent for verification');
             } else {
-                throw new Error(response.data.message || 'შეცდომა');
+                throw new Error(response.data.message || 'Error');
             }
         } catch (err) {
-            console.error('შეცდომა ვიზირებაზე გაგზავნისას:', err);
-            toast.error('შეცდომა: ' + err.message);
+            console.error('Error sending document for verification:', err);
+            toast.error('Error: ' + err.message);
         }
     };
 
     const handleAddHaveToVerify = (id) => {
-        if (id && !haveToVerify.includes(id)) {
-            setHaveToVerify([...haveToVerify, id]);
+        const selectedOption = options.find(option => option.id === id);
+        if (selectedOption) {
+            setHaveToVerify(selectedOption);
             setHaveToVerifySearch("");
         }
     };
 
-    const handleRemoveHaveToVerify = (id) => {
-        const updatedSizes = haveToVerify.filter(verifyId => verifyId !== id);
-        setHaveToVerify(updatedSizes);
+    const handleAddDoc = (uuid) => {
+        const selectedDoc = docList.find(option => option.uuid === uuid);
+        if (selectedDoc) {
+            setDoc(selectedDoc);
+            setDocSearch("");
+        }
     };
 
     const filteredOptions = options.filter(option =>
         option.email.toLowerCase().includes(haveToVerifySearch.toLowerCase())
     );
 
+    const filteredDocList = docList.filter(option => {
+        const titleMatch = option.title && option.title.toLowerCase().includes(docSearch.toLowerCase());
+        const documentNumberMatch = option.documentNumber && String(option.documentNumber).toLowerCase().includes(docSearch.toLowerCase());
+        return titleMatch || documentNumberMatch;
+    });
+    
     return (
         <div className="popup w-full md:w-3/4 rounded-lg shadow-lg p-4">
-            <h1 className="text-xl text-center text-accent-content mb-4">ვიზირებაზე გაგზავნა</h1>
+            <h1 className="text-xl text-center text-accent-content mb-4">Send for Verification</h1>
             <div className="divide-y divide-slate-700">
                 <div className="grid grid-cols-5 gap-4 py-2 items-center">
-                    <label className="text-xl font-medium text-white-700 col-span-1">documentNumber:</label>
-                    <input
-                        id="documentNumber"
-                        type="number"
-                        value={documentNumber}
-                        onChange={handleDocumentNumberChange}
-                        className="border rounded-lg px-3 py-2 mt-1 text-sm col-span-4"
-                    />
-                </div>
-                <div className="grid grid-cols-5 gap-4 py-2 items-center">
-                    <label className="text-xl font-medium text-white-700 col-span-1">haveToVerify:</label>
+                    <label className="text-xl font-medium text-white-700 col-span-1">Document Number:</label>
                     <div className="relative col-span-4">
                         <div className="flex flex-wrap border rounded-lg px-3 py-2 mt-1 text-sm w-full p-4" style={{ backgroundColor: "#121212" }}>
-                            {haveToVerify.map((id) => (
-                                <div key={id} className="relative flex items-center rounded text-white hover:bg-gray-800 text-xs">
-                                    <span className="flex ml-3 mr-1 text-xs">{options.find(option => option.id === id)?.email}</span>
+                            {doc && (
+                                <div className="relative flex items-center rounded text-white hover:bg-gray-800 text-xs">
+                                    <span className="flex ml-3 mr-1 text-xs">{doc.documentNumber}</span>
                                     <button
                                         type="button"
-                                        onClick={() => handleRemoveHaveToVerify(id)}
+                                        onClick={() => setDoc(null)}
                                         className="flex right-0 top-0 transform -translate-y-1 text-red-600 ml-1 mr-2 text-xs"
                                     >
                                         &times;
                                     </button>
                                 </div>
-                            ))}
+                            )}
+                            <input
+                                id="docList"
+                                type="text"
+                                value={docSearch}
+                                onChange={(e) => setDocSearch(e.target.value)}
+                                onFocus={() => setIsFocusedDoc(true)}
+                                onBlur={() => setTimeout(() => setIsFocusedDoc(false), 200)}
+                                className="border-none flex-grow ml-2 focus:outline-none text-white"
+                            />
+                            {isFocusedDoc && docSearch && (
+                                <div className="absolute left-0 z-10 border rounded-lg shadow-lg mt-1 w-full bg-gray-900 transform translate-y-6">
+                                    {filteredDocList.map((option) => (
+                                        <div
+                                            key={option.uuid}
+                                            onClick={() => handleAddDoc(option.uuid)}
+                                            className="px-4 py-2 cursor-pointer hover:bg-gray-800 rounded-lg"
+                                        >
+                                            title : {option.title} |||| docNum : {option.documentNumber}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-5 gap-4 py-2 items-center">
+                    <label className="text-xl font-medium text-white-700 col-span-1">Recipient:</label>
+                    <div className="relative col-span-4">
+                        <div className="flex flex-wrap border rounded-lg px-3 py-2 mt-1 text-sm w-full p-4" style={{ backgroundColor: "#121212" }}>
+                            {haveToVerify && (
+                                <div className="relative flex items-center rounded text-white hover:bg-gray-800 text-xs">
+                                    <span className="flex ml-3 mr-1 text-xs">{haveToVerify.email}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => setHaveToVerify(null)}
+                                        className="flex right-0 top-0 transform -translate-y-1 text-red-600 ml-1 mr-2 text-xs"
+                                    >
+                                        &times;
+                                    </button>
+                                </div>
+                            )}
                             <input
                                 id="haveToVerify"
                                 type="text"
@@ -133,7 +188,7 @@ const DocVerify = () => {
                         onClick={uploadDoc}
                         className="btn bg-blue-600 hover:bg-green-600 text-white btn-sm mx-2"
                     >
-                        გაგზავნა
+                        Send
                     </button>
                 </div>
             </div>

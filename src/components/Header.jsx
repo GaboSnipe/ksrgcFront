@@ -26,7 +26,7 @@ const Header = ({selectedDoc}) => {
   return (
 <>
   <div
-    className="navbar-bottom-menu border-y border-gray-800 bg-base-200 rounded-b-lg"
+    className="navbar-bottom-menu border-y border-gray-800 bg-base-200 "
     style={{ height: "10vh", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}
   >
     <div className="container text-base navlinks-container" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>

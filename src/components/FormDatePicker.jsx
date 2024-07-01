@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 const FormDatePicker = ({ name, label }) => {
   const [startDate, setStartDate] = useState();
   return (
-    <div className="form-control items-center">
+    <div className="form-control items-center rounded-full">
       <label htmlFor={name} className="label">
         <span className="label-text capitalize">{label}</span>
       </label>

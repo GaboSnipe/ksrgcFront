@@ -1,15 +1,47 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { format } from 'date-fns';
 import { nanoid } from "nanoid";
 
-const RightB = ({ selectedDoc }) => {
+const RightB = ({ selectedDoc, width, setWidth }) => {
+  const resizerRef = useRef(null);
+  const rightBRef = useRef(null);
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      if (rightBRef.current) {
+        const newWidth = (((window.innerWidth - event.clientX) / window.innerWidth) * 100);
+        setWidth(newWidth);
+      }
+
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    const handleMouseDown = () => {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    };
+
+    if (resizerRef.current) {
+      resizerRef.current.addEventListener('mousedown', handleMouseDown);
+    }
+
+    return () => {
+      if (resizerRef.current) {
+        resizerRef.current.removeEventListener('mousedown', handleMouseDown);
+      }
+    };
+  }, [setWidth]);
 
   const formatDate = (date) => {
     return date ? format(new Date(date), 'dd MMM yyyy, HH:mm') : '';
-  }
+  };
 
   return (
-    <div className="bg-base-200" style={{ width: "20%", height: "90vh" }}>
+    <div ref={rightBRef} className="bg-base-200 border-l border-gray-800" style={{ width: `${width}%`, height: "90vh", position: "relative" }}>
       <div style={{ marginLeft: '7%' }}>
         <div className="collapse collapse-plus bg-base-100" style={{ marginTop: '10px', width: '90%' }}>
           <input type="checkbox" />
@@ -29,12 +61,12 @@ const RightB = ({ selectedDoc }) => {
                   <tr className="text-accent-content text-xs" key={nanoid()}>
                     <td>documentNumber: {selectedDoc?.documentNumber}</td>
                   </tr>
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  {/* <tr className="text-accent-content text-xs" key={nanoid()}>
                     <td>have_to_sign_users: {selectedDoc?.have_to_sign_users}</td>
                   </tr>
                   <tr className="text-accent-content text-xs" key={nanoid()}>
                     <td>have_to_verify_users: {selectedDoc?.have_to_verify_users}</td>
-                  </tr>
+                  </tr> */}
                   <tr className="text-accent-content text-xs" key={nanoid()}>
                     <td>is_signed: {selectedDoc?.is_signed ? <span className="text-green-500">&#x2713;</span> : <span className="text-red-500">&#x2717;</span>}</td>
                   </tr>
@@ -44,21 +76,21 @@ const RightB = ({ selectedDoc }) => {
                   <tr className="text-accent-content text-xs" key={nanoid()}>
                     <td>owner: {selectedDoc?.owner}</td>
                   </tr>
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  {/* <tr className="text-accent-content text-xs" key={nanoid()}>
                     <td>signed_by_users: {selectedDoc?.signed_by_users}</td>
-                  </tr>
+                  </tr> */}
                   <tr className="text-accent-content text-xs" key={nanoid()}>
                     <td>title: {selectedDoc?.title}</td>
                   </tr>
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  {/* <tr className="text-accent-content text-xs" key={nanoid()}>
                     <td>updated_at: {formatDate(selectedDoc?.updated_at)}</td>
-                  </tr>
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  </tr> */}
+                  {/* <tr className="text-accent-content text-xs" key={nanoid()}>
                     <td>uuid: {selectedDoc?.uuid}</td>
-                  </tr>
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  </tr> */}
+                  {/* <tr className="text-accent-content text-xs" key={nanoid()}>
                     <td>verified_by_users: {selectedDoc?.verified_by_users}</td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>
@@ -148,10 +180,23 @@ const RightB = ({ selectedDoc }) => {
             </div>
           </div>
         </div>
+        <div
+        className="bg-base-200"
 
+          ref={resizerRef}
+          style={{
+            width: "7px",
+            height: "100%",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            cursor: "ew-resize"
+          }}
+        />
       </div>
     </div>
   );
 };
 
 export default RightB;
+
