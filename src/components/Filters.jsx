@@ -12,14 +12,14 @@ const Filters = () => {
       <div className="flex flex-col w-full md:flex-row md:justify-center md:items-center gap-4">
         <FormInput
           type="search"
-          label="დოკუმენტის სახელი"
+          label="დოკუმენტის &#8470;"
           name="search"
           size="input-sm"
           defaultValue=""
           className="md:flex-1"
         />
-        <FormDatePicker label="თარიღი" name="date" className="md:flex-1" />
-        <FormDatePicker label="თარიღი" name="date" className="md:flex-1" />
+        <FormDatePicker label="თარიღი (დან -" name="date" className="md:flex-1" />
+        <FormDatePicker label="მდე)" name="date" className="md:flex-1" />
       </div>
       <div className="flex justify-center w-full">
         <button

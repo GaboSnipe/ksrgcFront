@@ -43,7 +43,7 @@ const RightB = ({ selectedDoc, width, setWidth }) => {
   return (
     <div ref={rightBRef} className="bg-base-200 border-l border-gray-800" style={{ width: `${width}%`, height: "90vh", position: "relative" }}>
       <div style={{ marginLeft: '7%' }}>
-        <div className="collapse collapse-plus bg-base-100" style={{ marginTop: '10px', width: '90%' }}>
+        <div className="collapse collapse-plus bg-base-100 bg-base-100 hover:bg-base-300" style={{ marginTop: '10px', width: '90%' }}>
           <input type="checkbox" />
           <div className="collapse-title text-sm font-medium text-accent-content">
             დოკუმენტი
@@ -97,7 +97,7 @@ const RightB = ({ selectedDoc, width, setWidth }) => {
           </div>
         </div>
 
-        <div className="collapse collapse-plus bg-base-100 mt-2 w-11/12">
+        <div className="collapse collapse-plus bg-base-100 mt-2 w-11/12 bg-base-100 hover:bg-base-300">
           <input type="checkbox" />
           <div className="collapse-title text-sm font-medium text-accent-content">
             ხელმოწერა
@@ -139,7 +139,7 @@ const RightB = ({ selectedDoc, width, setWidth }) => {
           </div>
         </div>
 
-        <div className="collapse collapse-plus bg-base-100 mt-2 w-11/12">
+        <div className="collapse collapse-plus bg-base-100 mt-2 w-11/12 bg-base-100 hover:bg-base-300">
           <input type="checkbox" />
           <div className="collapse-title text-sm font-medium text-accent-content">
             ვიზირება
