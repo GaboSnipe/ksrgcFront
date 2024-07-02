@@ -138,33 +138,34 @@ const DocAdd = ({ setIsOpenAddDoc }) => {
 
     return (
         <div className="popup w-full md:w-3/4 rounded-lg shadow-lg p-4 bg-base-200">
-            <h1 className="text-xl text-center text-accent-content mb-4">ახალი დოკუმენტის მომზადება</h1>
+            <h1 className="text-xl text-center text-accent-content mb-10">ახალი დოკუმენტის მომზადება</h1>
             <div className="divide-y divide-slate-700">
-                <div className="grid grid-cols-5 gap-4 py-2 items-center">
-                    <label className="text-xl font-medium text-white-700 col-span-1">documentNumber:</label>
+                <div className="grid grid-cols-2 gap-4 py-2 items-center">
+                    <label className="text-xl font-medium text-white-700 col-span-1 ml-5">დოკუმენტის &#8470;:</label>
                     <input
                         id="documentNumber"
                         type="number"
                         value={documentNumber}
                         onChange={handleDocumentNumberChange}
-                        className="border rounded-lg px-3 py-2 mt-1 text-sm col-span-4"
+                        className="border rounded-lg px-3 py-2 mt-1 text-sm"
                     />
                 </div>
 
-                <div className="grid grid-cols-5 gap-4 py-2 items-center">
-                    <label className="text-xl font-medium text-white-700 col-span-1">title:</label>
+                <div className="grid grid-cols-2 gap-4 py-2 items-center">
+                    <label className="text-xl font-medium text-white-700 col-span-1 ml-5">სათაური:</label>
                     <input
                         id="title"
                         type="text"
                         value={title}
+                        placeholder="დოკუმენტის სათაური..."
                         onChange={(e) => setTitle(e.target.value)}
-                        className="border rounded-lg px-3 py-2 mt-1 text-sm col-span-4"
+                        className="border rounded-lg px-3 py-2 mt-1 text-sm col-span-1 placeholder-gray-500 placeholder-opacity-50"
                     />
                 </div>
 
-                <div className="grid grid-cols-5 gap-4 py-2 items-center">
-                    <label className="text-xl font-medium text-white-700 col-span-1">დოკუმენტი:</label>
-                    <div className="relative col-span-4">
+                <div className="grid grid-cols-2 gap-4 py-2 items-center">
+                    <label className="text-xl font-medium text-white-700 col-span-1 ml-5">ფაილი:</label>
+                    <div className="relative col-span-1">
                         <input
                             id="docUpload"
                             type="file"
@@ -173,16 +174,115 @@ const DocAdd = ({ setIsOpenAddDoc }) => {
                         />
                         <label
                             htmlFor="docUpload"
-                            className="block font-medium text-white-700 border rounded-lg px-3 py-2 mt-1 text-sm cursor-pointer bg-gray-800 hover:bg-gray-700 text-white text-center"
+                            className="block font-medium text-white-700 border rounded-lg px-3 py-2 mt-1 text-sm cursor-pointer bg-gray-800 hover:bg-gray-700 text-gray-500 text-opacity-50"
                         >
-                            {selectedFile ? `${selectedFile.name}` : 'ფაილის ატვირთვა'}
+                            {selectedFile ? `${selectedFile.name}` : 'დააჭირეთ ასატვირთად...'}
                         </label>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-5 gap-4 py-2 items-center">
-                    <label className="text-xl font-medium text-white-700 col-span-1">დოკუმენტები:</label>
-                    <div className="relative col-span-4">
+                <div className="grid grid-cols-2 gap-4 py-2 items-center">
+                    <label className="text-xl font-medium text-white-700 col-span-1 ml-5">ხელმოწერაზე გაგზავნა:</label>
+                    <div className="relative col-span-1">
+                        <div className="flex flex-wrap border rounded-lg px-3 py-2 mt-1 text-sm w-full p-4" style={{ backgroundColor: "#121212" }}>
+                            {haveToSign.map((id) => (
+                                <div key={id} className="relative flex items-center rounded text-white hover:bg-gray-800 text-xs">
+                                    <span className="flex ml-3 mr-1 text-xs">{usersList.find(option => option.id === id)?.email}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleRemoveHaveToSign(id)}
+                                        className="flex right-0 top-0 transform -translate-y-1 text-red-600 ml-1 mr-2 text-xs"
+                                    >
+                                        &times;
+                                    </button>
+                                </div>
+                            ))}
+                            <input
+                                id="haveToSign"
+                                type="text"
+                                value={haveToSignSearch}
+                                onChange={(e) => setHaveToSignSearch(e.target.value)}
+                                onFocus={() => setIsFocused(true)}
+                                onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+                                placeholder="აირჩიეთ მომხმარებლები"
+                                className="border-none flex-grow ml-2 focus:outline-none text-white placeholder-gray-500 placeholder-opacity-50"
+                            />
+                            {isFocused && haveToSignSearch && (
+                                <div className="absolute left-0 z-10 border rounded-lg shadow-lg mt-1 w-full bg-gray-900 transform translate-y-6">
+                                    {filteredSignOptions.map((option) => (
+                                        <div
+                                            key={option.id}
+                                            onClick={() => handleAddHaveToSign(option.id)}
+                                            className="px-4 py-2 cursor-pointer hover:bg-gray-800 rounded-lg"
+                                        >
+                                            {option.email}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 py-2 items-center">
+                    <label className="text-xl font-medium text-white-700 col-span-1 ml-5">ვიზირებაზე გაგზავნა:</label>
+                    <div className="relative col-span-1">
+                        <div className="flex flex-wrap border rounded-lg px-3 py-2 mt-1 text-sm w-full p-4" style={{ backgroundColor: "#121212" }}>
+                            {haveToVerify.map((id) => (
+                                <div key={id} className="relative flex items-center rounded text-white hover:bg-gray-800 text-xs">
+                                    <span className="flex ml-3 mr-1 text-xs">{usersList.find(option => option.id === id)?.email}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleRemoveHaveToVerify(id)}
+                                        className="flex right-0 top-0 transform -translate-y-1 text-red-600 ml-1 mr-2 text-xs"
+                                    >
+                                        &times;
+                                    </button>
+                                </div>
+                            ))}
+                            <input
+                                id="haveToVerify"
+                                type="text"
+                                value={haveToVerifySearch}
+                                onChange={(e) => setHaveToVerifySearch(e.target.value)}
+                                onFocus={() => setIsFocused(true)}
+                                onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+                                placeholder="აირჩიეთ მომხმარებლები"
+                                className="border-none flex-grow ml-2 focus:outline-none text-white placeholder-gray-500 placeholder-opacity-50"
+                            />
+                            {isFocused && haveToVerifySearch && (
+                                <div className="absolute left-0 z-10 border rounded-lg shadow-lg mt-1 w-full bg-gray-900 transform translate-y-6">
+                                    {filteredVerifyOptions.map((option) => (
+                                        <div
+                                            key={option.id}
+                                            onClick={() => handleAddHaveToVerify(option.id)}
+                                            className="px-4 py-2 cursor-pointer hover:bg-gray-800 rounded-lg"
+                                        >
+                                            {option.email}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div className="grid grid-cols-2 gap-4 py-2 items-center">
+                    <label className="text-xl font-medium text-white-700 ml-5">კომენტარი:</label>
+                    <textarea
+                        id="coment"
+                        value={coment}
+                        onChange={(e) => setComent(e.target.value)}
+                        className="border rounded-lg px-3 py-2 mt-1 text-sm col-span-1"
+                        style={{ maxHeight: '40vh', minHeight: '15vh', overflowY: 'auto' }}
+                    />
+                </div>
+
+
+                <div className="grid grid-cols-2 gap-4 py-2 items-center">
+                    <label className="text-xl font-medium text-white-700 col-span-1 ml-5">დანართის ატვირთვა:</label>
+                    <div className="relative col-span-1">
                         <input
                             id="docsUpload"
                             type="file"
@@ -194,9 +294,9 @@ const DocAdd = ({ setIsOpenAddDoc }) => {
                         {selectedFiles.length === 0 ? (
                             <label
                                 htmlFor="docsUpload"
-                                className="block font-medium text-white border rounded-lg px-3 py-2 mt-1 text-sm cursor-pointer bg-gray-800 hover:bg-gray-700 text-center w-full"
+                                className="block font-medium text-gray-500 text-opacity-50 border rounded-lg px-3 py-2 mt-1 text-sm cursor-pointer bg-gray-800 hover:bg-gray-700 text-center w-full"
                             >
-                                ფაილის ატვირთვა
+                                ატვირთეთ ფაილები
                             </label>
                         ) : (
                             <div className="block font-medium text-white border rounded-lg px-3 py-2 mt-1 text-sm bg-gray-800 hover:bg-gray-700 text-center w-full">
@@ -228,106 +328,12 @@ const DocAdd = ({ setIsOpenAddDoc }) => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-5 gap-4 py-2 items-center">
-                    <label className="text-xl font-medium text-white-700 col-span-1">coment:</label>
-                    <textarea
-                        id="coment"
-                        value={coment}
-                        onChange={(e) => setComent(e.target.value)}
-                        className="border rounded-lg px-3 py-2 mt-1 text-sm col-span-4"
-                        style={{ maxHeight: '40vh', minHeight: '15vh', overflowY: 'auto' }}
-                    />
-                </div>
 
-                <div className="grid grid-cols-5 gap-4 py-2 items-center">
-                    <label className="text-xl font-medium text-white-700 col-span-1">haveToSign:</label>
-                    <div className="relative col-span-4">
-                        <div className="flex flex-wrap border rounded-lg px-3 py-2 mt-1 text-sm w-full p-4" style={{ backgroundColor: "#121212" }}>
-                            {haveToSign.map((id) => (
-                                <div key={id} className="relative flex items-center rounded text-white hover:bg-gray-800 text-xs">
-                                    <span className="flex ml-3 mr-1 text-xs">{usersList.find(option => option.id === id)?.email}</span>
-                                    <button
-                                        type="button"
-                                        onClick={() => handleRemoveHaveToSign(id)}
-                                        className="flex right-0 top-0 transform -translate-y-1 text-red-600 ml-1 mr-2 text-xs"
-                                    >
-                                        &times;
-                                    </button>
-                                </div>
-                            ))}
-                            <input
-                                id="haveToSign"
-                                type="text"
-                                value={haveToSignSearch}
-                                onChange={(e) => setHaveToSignSearch(e.target.value)}
-                                onFocus={() => setIsFocused(true)}
-                                onBlur={() => setTimeout(() => setIsFocused(false), 200)}
-                                className="border-none flex-grow ml-2 focus:outline-none text-white"
-                            />
-                            {isFocused && haveToSignSearch && (
-                                <div className="absolute left-0 z-10 border rounded-lg shadow-lg mt-1 w-full bg-gray-900 transform translate-y-6">
-                                    {filteredSignOptions.map((option) => (
-                                        <div
-                                            key={option.id}
-                                            onClick={() => handleAddHaveToSign(option.id)}
-                                            className="px-4 py-2 cursor-pointer hover:bg-gray-800 rounded-lg"
-                                        >
-                                            {option.email}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-5 gap-4 py-2 items-center">
-                    <label className="text-xl font-medium text-white-700 col-span-1">haveToVerify:</label>
-                    <div className="relative col-span-4">
-                        <div className="flex flex-wrap border rounded-lg px-3 py-2 mt-1 text-sm w-full p-4" style={{ backgroundColor: "#121212" }}>
-                            {haveToVerify.map((id) => (
-                                <div key={id} className="relative flex items-center rounded text-white hover:bg-gray-800 text-xs">
-                                    <span className="flex ml-3 mr-1 text-xs">{usersList.find(option => option.id === id)?.email}</span>
-                                    <button
-                                        type="button"
-                                        onClick={() => handleRemoveHaveToVerify(id)}
-                                        className="flex right-0 top-0 transform -translate-y-1 text-red-600 ml-1 mr-2 text-xs"
-                                    >
-                                        &times;
-                                    </button>
-                                </div>
-                            ))}
-                            <input
-                                id="haveToVerify"
-                                type="text"
-                                value={haveToVerifySearch}
-                                onChange={(e) => setHaveToVerifySearch(e.target.value)}
-                                onFocus={() => setIsFocused(true)}
-                                onBlur={() => setTimeout(() => setIsFocused(false), 200)}
-                                className="border-none flex-grow ml-2 focus:outline-none text-white"
-                            />
-                            {isFocused && haveToVerifySearch && (
-                                <div className="absolute left-0 z-10 border rounded-lg shadow-lg mt-1 w-full bg-gray-900 transform translate-y-6">
-                                    {filteredVerifyOptions.map((option) => (
-                                        <div
-                                            key={option.id}
-                                            onClick={() => handleAddHaveToVerify(option.id)}
-                                            className="px-4 py-2 cursor-pointer hover:bg-gray-800 rounded-lg"
-                                        >
-                                            {option.email}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex justify-center py-2">
+                <div className="flex justify-center py-2 pt-10">
                     <button
                         type="button"
                         onClick={uploadDoc}
-                        className="btn bg-blue-600 hover:bg-green-600 text-white btn-sm mx-2"
+                        className="bg-transparent hover:bg-blue-500 text-gray-500 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded"
                     >
                         დოკუმენტის შექმნა
                     </button>

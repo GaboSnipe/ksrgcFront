@@ -38,6 +38,7 @@ const LeftB = ({ setAllDocView, allDocView, width, setWidth, setDocList, setList
   const verifySentToUser = async (userId) => {
     try {
       const response = await axios.get(`/api/eDocumentFlow/document/list/?task=VERIFY&sent_by_user=${userId}&limit=${pageMax}&offset=0`);
+      
       setDocList(response.data.results);
       setListMax(response.data.count);
 
@@ -103,11 +104,15 @@ const LeftB = ({ setAllDocView, allDocView, width, setWidth, setDocList, setList
     setWidth(0);
   }
 
+  const setText = (text) => {
+    
+  } 
+
   return (
     <div ref={leftBRef} className="bg-base-200 border-r border-gray-800 " style={{ width: `${width}%`, height: "90vh", position: "relative" }}>
       <div style={{ marginLeft: '7%' }}>
 
-        <div className="collapse collapse-plus bg-base-100" style={{ marginTop: '10px', width: '90%' }}>
+        <div className="collapse collapse-plus bg-base-100 hover:bg-base-300" style={{ marginTop: '10px', width: '90%' }}>
           <input type="checkbox" />
           <div className="collapse-title text-sm font-medium text-accent-content">
             ვიზირება
@@ -140,7 +145,8 @@ const LeftB = ({ setAllDocView, allDocView, width, setWidth, setDocList, setList
             </div>
           </div>
         </div>
-        <div className="collapse collapse-plus bg-base-100" style={{ marginTop: '10px', width: '90%' }}>
+
+        <div className="collapse collapse-plus bg-base-100 hover:bg-base-300" style={{ marginTop: '10px', width: '90%' }}>
           <input type="checkbox" />
           <div className="collapse-title text-sm font-medium text-accent-content">
             ხელმოწერა
@@ -175,9 +181,12 @@ const LeftB = ({ setAllDocView, allDocView, width, setWidth, setDocList, setList
 
         <div className="collapse collapse-plus " style={{ marginTop: '10px', width: '90%' }}>
           <button onClick={viewAllDoc}>
-            <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">view all document</div>
+            <div className="collapse-title text-sm font-medium text-accent-content bg-base-100 text-white whitespace-nowrap hover:bg-base-300 text-start">
+              ყველას ნახვა
+            </div>
           </button>
         </div>
+
         <button
   className="btn flex items-center justify-center bg-gray-800 absolute top-1/2 translate-x-2 right-0 transform p-1 text-xs"
   onClick={hideLeft}

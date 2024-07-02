@@ -3,6 +3,9 @@ import "../styles/Header.css";
 import { useSelector } from "react-redux";
 import { DocAdd, DocVerify, DocSign } from "./index.js";
 import 'react-toastify/dist/ReactToastify.css';
+import { TiDocumentAdd } from "react-icons/ti";
+import { BsPencil } from "react-icons/bs";
+import { IoSendOutline } from "react-icons/io5";
 
 const Header = ({selectedDoc}) => {
   const loginState = useSelector((state) => state.auth.isLoggedIn);
@@ -29,15 +32,18 @@ const Header = ({selectedDoc}) => {
     className="navbar-bottom-menu border-y border-gray-800 bg-base-200 "
     style={{ height: "10vh", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}
   >
-    <div className="container text-base navlinks-container" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <button onClick={toggleAddDoc}>
-        <div className="collapse-title text-sm font-medium text-accent-content">დოკუმენტის დამატება</div>
+    <div className="container text-base navlinks-container py-1" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "inherit" }}>
+      <button onClick={toggleAddDoc} className="btn text-sm bg-transparent hover:bg-gray-800 px-4 h-full flex items-center justify-center flex-col">
+        <TiDocumentAdd size={42}/>
+        <div>დოკუმენტის დამატება</div>
       </button>
-      <button onClick={toggleSign}>
-        <div className="collapse-title text-sm font-medium text-accent-content">send to sign</div>
+      <button onClick={toggleSign} className="btn text-sm bg-transparent hover:bg-gray-800 px-4 h-full flex items-center justify-center flex-col" style={{maxHeight: "-webkit-fill-available;"}}>
+        <BsPencil size={42} />
+        <div>ხელმოწერაზე გაგზავნა</div>
       </button>
-      <button onClick={toggleVerify}>
-        <div className="collapse-title text-sm font-medium text-accent-content">send to verify</div>
+      <button onClick={toggleVerify} className="btn text-sm bg-transparent hover:bg-gray-800 px-4 h-full flex items-center justify-center flex-col" style={{maxHeight: "-webkit-fill-available;"}}>
+        <IoSendOutline size={42} />
+        <div>ვიზირებაზე გაგზავნა</div>
       </button>
     </div>
   </div>
