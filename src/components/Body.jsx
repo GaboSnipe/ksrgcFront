@@ -17,6 +17,7 @@ const Body = ({
   pageMax,
   setListMax,
   listMax,
+  choseText,
 }) => {
   const handleClick = (doc) => {
     setSelectedDoc(doc);
@@ -56,6 +57,7 @@ const Body = ({
           setLastPagination={setLastPagination}
           setLastUrl={setLastUrl}
           pageMax={pageMax}
+          choseText={choseText}
         />
       </div>
       <div className="bg-base-200 rounded-b-md flex justify-center items-center p-4">

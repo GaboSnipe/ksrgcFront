@@ -3,7 +3,7 @@ import "../styles/LeftB.css";
 import axios from "../axios";
 import { nanoid } from "nanoid";
 
-const LeftB = ({ setAllDocView, allDocView, width, setWidth, setDocList, setListMax, userObj, pageMax, setLastUrl, setLastPagination }) => {
+const LeftB = ({ setAllDocView, setchoseText, allDocView, width, setWidth, setDocList, setListMax, userObj, pageMax, setLastUrl, setLastPagination }) => {
   const resizerRef = useRef(null);
   const leftBRef = useRef(null);
 
@@ -41,6 +41,7 @@ const LeftB = ({ setAllDocView, allDocView, width, setWidth, setDocList, setList
       
       setDocList(response.data.results);
       setListMax(response.data.count);
+      setchoseText("ვიზირება - დამევალა");
 
         setLastUrl('verifySent');
         setLastPagination(0);
@@ -54,6 +55,7 @@ const LeftB = ({ setAllDocView, allDocView, width, setWidth, setDocList, setList
       setDocList(response.data.results);
       setListMax(response.data.count);
       setLastUrl('verifyReceived');
+      setchoseText("ვიზირება - დავავალე");
         setLastPagination(0);
 
     } catch (error) {
@@ -66,6 +68,7 @@ const LeftB = ({ setAllDocView, allDocView, width, setWidth, setDocList, setList
       setDocList(response.data.results);
       setListMax(response.data.count);
       setLastUrl('signSent');
+      setchoseText("ხელმოწერა - დამევალა");
         setLastPagination(0);
 
     } catch (error) {
@@ -78,6 +81,7 @@ const LeftB = ({ setAllDocView, allDocView, width, setWidth, setDocList, setList
       setDocList(response.data.results);
       setListMax(response.data.count);
       setLastUrl('signReceived');
+      setchoseText("ხელმოწერა - დავავალე");
         setLastPagination(0);
 
     } catch (error) {
@@ -94,7 +98,8 @@ const LeftB = ({ setAllDocView, allDocView, width, setWidth, setDocList, setList
       setListMax(response.data.count);
       setLastUrl('docList');
         setLastPagination(0);
-      })
+      setchoseText("ყველა");
+    })
       .catch(error => {
         console.error(error);
       });

@@ -15,6 +15,7 @@ const Home = () => {
   const [userId, setUserId] = useState(null); // Initialize userId as null initially
   const [urlList, setUrlList] = useState();
   const [listMax, setListMax] = useState();
+  const [choseText, setchoseText] = useState("ყველა");
   const pageMax = 10;
 
   useEffect(() => {
@@ -84,6 +85,7 @@ const Home = () => {
             setLastUrl={setLastUrl}
             setLastPagination={setLastPagination}
             setListMax={setListMax}
+            setchoseText={setchoseText}
           />
         )}
 
@@ -101,6 +103,7 @@ const Home = () => {
           urlList={urlList}
           listMax={listMax}
           setListMax={setListMax}
+          choseText={choseText}
         />
 
         {rightBWidth < 10 ? (
