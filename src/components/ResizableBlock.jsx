@@ -17,7 +17,6 @@ const ResizableBlock = ({ initialWidth, thresholdWidth }) => {
 
     window.addEventListener("resize", handleResize);
     handleResize();
-    console.log(isHidden);
 
     return () => {
       window.removeEventListener("resize", handleResize);

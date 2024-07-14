@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import "../styles/Home.css";
 import { Header, Body, LeftB, RightB } from "../components";
 import axios from "../axios";
+import { ActiveObj } from "../utils/const";
+
 
 const Home = () => {
+  const [activeObj, setActiveObj] = useState(ActiveObj.ALLDOC)
   const [allDocView, setAllDocView] = useState(false);
   const [userObj, setUserObj] = useState(null);
   const [selectedDoc, setSelectedDoc] = useState(null);
@@ -16,6 +19,9 @@ const Home = () => {
   const [urlList, setUrlList] = useState();
   const [listMax, setListMax] = useState();
   const [choseText, setchoseText] = useState("ყველა");
+  const [fileList, setFileList] = useState([]);
+  const [isFileList, setIsFileList] = useState(false);
+
   const pageMax = 10;
 
   useEffect(() => {
@@ -86,6 +92,11 @@ const Home = () => {
             setLastPagination={setLastPagination}
             setListMax={setListMax}
             setchoseText={setchoseText}
+            activeObj={activeObj}
+            setActiveObj={setActiveObj}
+            setFileList={setFileList}
+            setIsFileList={setIsFileList}
+
           />
         )}
 
@@ -103,7 +114,13 @@ const Home = () => {
           urlList={urlList}
           listMax={listMax}
           setListMax={setListMax}
+          setchoseText={setchoseText}
           choseText={choseText}
+          activeObj={activeObj}
+          setFileList={setFileList}
+          fileList={fileList}
+          setIsFileList={setIsFileList}
+          isFileList={isFileList}
         />
 
         {rightBWidth < 10 ? (

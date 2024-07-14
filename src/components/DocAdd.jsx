@@ -24,7 +24,6 @@ const DocAdd = ({ setIsOpenAddDoc }) => {
           try {
             const response = await axios.get('/api/accounts/list/');
             setUsersList(response?.data);
-            console.log(user)
           } catch (error) {
             console.error('Error:', error);
           }
@@ -138,7 +137,7 @@ const DocAdd = ({ setIsOpenAddDoc }) => {
 
     return (
         <div className="popup w-full md:w-3/4 rounded-lg shadow-lg p-4 bg-base-200">
-            <h1 className="text-xl text-center text-accent-content mb-10">ახალი დოკუმენტის მომზადება</h1>
+            <h1 className="text-xl text-center text-content mb-10">ახალი დოკუმენტის მომზადება</h1>
             <div className="divide-y divide-slate-700">
                 <div className="grid grid-cols-2 gap-4 py-2 items-center">
                     <label className="text-xl font-medium text-white-700 col-span-1 ml-5">დოკუმენტის &#8470;:</label>
