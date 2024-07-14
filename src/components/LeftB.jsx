@@ -1,9 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
+import { FileList } from "./index";
 import "../styles/LeftB.css";
 import axios from "../axios";
 import { nanoid } from "nanoid";
+import { ActiveObj } from "../utils/const";
 
-const LeftB = ({ setAllDocView, setchoseText, allDocView, width, setWidth, setDocList, setListMax, userObj, pageMax, setLastUrl, setLastPagination }) => {
+const LeftB = ({ setAllDocView, setActiveObj, setIsFileList, setFileList, activeObj, setchoseText, allDocView, width, setWidth, setDocList, setListMax, userObj, pageMax, setLastUrl, setLastPagination }) => {
+  const [seeWorkSpace, setSeeWorkSpace] = useState(false);
+  const [fileList, SetFileList] = useState([]);
   const resizerRef = useRef(null);
   const leftBRef = useRef(null);
 
@@ -38,13 +42,13 @@ const LeftB = ({ setAllDocView, setchoseText, allDocView, width, setWidth, setDo
   const verifySentToUser = async (userId) => {
     try {
       const response = await axios.get(`/api/eDocumentFlow/document/list/?task=VERIFY&sent_by_user=${userId}&limit=${pageMax}&offset=0`);
-      
+
       setDocList(response.data.results);
       setListMax(response.data.count);
       setchoseText("ვიზირება - დამევალა");
-
-        setLastUrl('verifySent');
-        setLastPagination(0);
+      setActiveObj(ActiveObj.ALLDOC);
+      setLastUrl('verifySent');
+      setLastPagination(0);
     } catch (error) {
       console.error(error);
     }
@@ -54,9 +58,11 @@ const LeftB = ({ setAllDocView, setchoseText, allDocView, width, setWidth, setDo
       const response = await axios.get(`/api/eDocumentFlow/document/list/?task=VERIFY&received_to_user=${userId}&limit=${pageMax}&offset=0`);
       setDocList(response.data.results);
       setListMax(response.data.count);
+      setActiveObj(ActiveObj.ALLDOC);
+
       setLastUrl('verifyReceived');
       setchoseText("ვიზირება - დავავალე");
-        setLastPagination(0);
+      setLastPagination(0);
 
     } catch (error) {
       console.error(error);
@@ -67,9 +73,11 @@ const LeftB = ({ setAllDocView, setchoseText, allDocView, width, setWidth, setDo
       const response = await axios.get(`/api/eDocumentFlow/document/list/?task=SIGN&sent_by_user=${userId}&limit=${pageMax}&offset=0`);
       setDocList(response.data.results);
       setListMax(response.data.count);
+      setActiveObj(ActiveObj.ALLDOC);
+
       setLastUrl('signSent');
       setchoseText("ხელმოწერა - დამევალა");
-        setLastPagination(0);
+      setLastPagination(0);
 
     } catch (error) {
       console.error(error);
@@ -80,9 +88,11 @@ const LeftB = ({ setAllDocView, setchoseText, allDocView, width, setWidth, setDo
       const response = await axios.get(`/api/eDocumentFlow/document/list/?task=SIGN&received_to_user=${userId}&limit=${pageMax}&offset=0`);
       setDocList(response.data.results);
       setListMax(response.data.count);
+      setActiveObj(ActiveObj.ALLDOC);
+
       setLastUrl('signReceived');
       setchoseText("ხელმოწერა - დავავალე");
-        setLastPagination(0);
+      setLastPagination(0);
 
     } catch (error) {
       console.error(error);
@@ -95,52 +105,76 @@ const LeftB = ({ setAllDocView, setchoseText, allDocView, width, setWidth, setDo
     axios.get(`/api/eDocumentFlow/document/list/?limit=${pageMax}&offset=0`)
       .then(response => {
         setDocList(response.data.results);
-      setListMax(response.data.count);
-      setLastUrl('docList');
+        setListMax(response.data.count);
+        setLastUrl('docList');
+      setActiveObj(ActiveObj.ALLDOC);
+
         setLastPagination(0);
-      setchoseText("ყველა");
-    })
+        setchoseText("ყველა");
+      })
       .catch(error => {
         console.error(error);
       });
+  };
+
+  const viewWorkSpace = async () => {
+    try {
+      const response = await axios.get('/api/expertise/folder/list/');
+      setFileList(response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+      setchoseText("სამუშაო გარემო");
+      setActiveObj(ActiveObj.WORKSPACE); 
+      setIsFileList(false);
+  };
+  const viewInbox = async () => {
+    try {
+      const response = await axios.get('/api/expertise/folder/list/');
+      setFileList(response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+      setchoseText("Inbox");
+      setActiveObj(ActiveObj.INBOX); 
+      setIsFileList(false);
   };
 
   const hideLeft = () => {
     setWidth(0);
   }
 
-  const setText = (text) => {
-    
-  } 
 
   return (
     <div ref={leftBRef} className="bg-base-200 border-r border-gray-800 " style={{ width: `${width}%`, height: "90vh", position: "relative" }}>
       <div style={{ marginLeft: '7%' }}>
 
+
+
         <div className="collapse collapse-plus bg-base-100 hover:bg-base-300" style={{ marginTop: '10px', width: '90%' }}>
           <input type="checkbox" />
-          <div className="collapse-title text-sm font-medium text-accent-content">
+          <div className="collapse-title text-sm font-medium text-content">
             ვიზირება
           </div>
           <div className="collapse-content">
             <div className="overflow-x-auto">
               <table>
                 <tbody>
-                  <tr className="text-accent-content" key={nanoid()}>
+                  <tr className="text-content" key={nanoid()}>
                     <td>
                       <button
                         onClick={() => verifySentToUser(userObj?.id)}
-                        className="text-accent-content text-xs">
+                        className="text-content text-xs">
                         დამევალა
                       </button>
 
                     </td>
                   </tr>
-                  <tr className="text-accent-content" key={nanoid()}>
+                  <tr className="text-content" key={nanoid()}>
                     <td>
                       <button
                         onClick={() => verifyReceivedToUser(userObj?.id)}
-                        className="text-accent-content text-xs">
+                        className="text-content text-xs">
                         დავავალე
                       </button>
                     </td>
@@ -153,27 +187,27 @@ const LeftB = ({ setAllDocView, setchoseText, allDocView, width, setWidth, setDo
 
         <div className="collapse collapse-plus bg-base-100 hover:bg-base-300" style={{ marginTop: '10px', width: '90%' }}>
           <input type="checkbox" />
-          <div className="collapse-title text-sm font-medium text-accent-content">
+          <div className="collapse-title text-sm font-medium text-content">
             ხელმოწერა
           </div>
           <div className="collapse-content">
             <div className="overflow-x-auto">
               <table>
                 <tbody>
-                  <tr className="text-accent-content" key={nanoid()}>
+                  <tr className="text-content" key={nanoid()}>
                     <td>
                       <button
                         onClick={() => signReceivedToUser(userObj?.id)}
-                        className="text-accent-content text-xs">
+                        className="text-content text-xs">
                         დამევალა
                       </button>
                     </td>
                   </tr>
-                  <tr className="text-accent-content" key={nanoid()}>
+                  <tr className="text-content" key={nanoid()}>
                     <td>
                       <button
                         onClick={() => signSentToUser(userObj?.id)}
-                        className="text-accent-content text-xs">
+                        className="text-content text-xs">
                         დავავალე
                       </button>
                     </td>
@@ -186,18 +220,34 @@ const LeftB = ({ setAllDocView, setchoseText, allDocView, width, setWidth, setDo
 
         <div className="collapse collapse-plus " style={{ marginTop: '10px', width: '90%' }}>
           <button onClick={viewAllDoc}>
-            <div className="collapse-title text-sm font-medium text-accent-content bg-base-100 text-white whitespace-nowrap hover:bg-base-300 text-start">
+            <div className="collapse-title text-sm font-medium text-content bg-base-100 whitespace-nowrap hover:bg-base-300 text-start">
               ყველას ნახვა
             </div>
           </button>
         </div>
+        <div className="collapse collapse-plus " style={{ marginTop: '10px', width: '90%' }}>
+          <button onClick={viewWorkSpace}>
+            <div className="collapse-title text-sm font-medium text-content bg-base-100 whitespace-nowrap hover:bg-base-300 text-start">
+              სამუშაო გარემო
+            </div>
+          </button>
+        </div>
+        <div className="collapse collapse-plus " style={{ marginTop: '10px', width: '90%' }}>
+          <button onClick={viewInbox}>
+            <div className="collapse-title text-sm font-medium text-content bg-base-100 whitespace-nowrap hover:bg-base-300 text-start">
+              inbox
+            </div>
+          </button>
+        </div>
+
+
 
         <button
-  className="btn flex items-center justify-center bg-gray-800 absolute top-1/2 translate-x-2 right-0 transform p-1 text-xs"
-  onClick={hideLeft}
->
-  &#60;
-</button>
+          className="btn flex items-center justify-center bg-gray-800 absolute top-1/2 translate-x-2 right-0 transform p-1 text-xs"
+          onClick={hideLeft}
+        >
+          &#60;
+        </button>
 
         {/* <div
         className="bg-base-200"

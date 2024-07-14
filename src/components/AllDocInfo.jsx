@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DocInfo } from ".";
 
-const AllDocInfo = ({ setSelectedDoc, choseText, docList , setDocList, setLastPagination, setLastUrl, pageMax  }) => {
+const AllDocInfo = ({ setSelectedDoc, docList , setDocList, setLastPagination, setLastUrl, pageMax  }) => {
 
   const handleDocClick = (doc) => {
     setSelectedDoc(doc);
@@ -10,7 +10,6 @@ const AllDocInfo = ({ setSelectedDoc, choseText, docList , setDocList, setLastPa
   return (
 <div className="relative overflow-x-auto shadow-md">
 
-  <h1 className="my-5 py-4 pl-5 dark:bg-base-200" id="docInfoPath">დოკუმენტები - {choseText}</h1>
 
   <table className="w-full text-xs text-left rtl:text-right text-gray-500 dark:text-gray-400">
     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-base-200 dark:text-gray-400">

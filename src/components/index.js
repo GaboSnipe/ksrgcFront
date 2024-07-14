@@ -8,3 +8,8 @@ export { default as AllDocInfo } from "./AllDocInfo";
 export { default as DocInfo } from "./DocInfo";
 export { default as DocVerify } from "./DocVerify";
 export { default as DocSign } from "./DocSign";
+export { default as FileIcon } from "./FileIcon";
+export { default as FolderIcon } from "./FolderIcon";
+export { default as FileList } from "./FileList";
+export { default as Inbox } from "./Inbox";
+

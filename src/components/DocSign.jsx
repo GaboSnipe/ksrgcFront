@@ -99,7 +99,7 @@ const DocSign = ({ selectedDoc }) => {
 
     return (
         <div className="popup w-full md:w-3/4 rounded-lg shadow-lg p-4">
-            <h1 className="text-xl text-center text-accent-content mb-10">ხელმოწერაზე გაგზავნა</h1>
+            <h1 className="text-xl text-center text-content mb-10">ხელმოწერაზე გაგზავნა</h1>
 
             <div className="divide-y divide-slate-700">
                 <div className="grid grid-cols-2 gap-4 py-2 items-center">

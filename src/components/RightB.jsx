@@ -43,52 +43,52 @@ const RightB = ({ selectedDoc, width, setWidth }) => {
   return (
     <div ref={rightBRef} className="bg-base-200 border-l border-gray-800" style={{ width: `${width}%`, height: "90vh", position: "relative" }}>
       <div style={{ marginLeft: '7%' }}>
-        <div className="collapse collapse-plus bg-base-100 bg-base-100 hover:bg-base-300" style={{ marginTop: '10px', width: '90%' }}>
+        <div className="collapse collapse-plus bg-base-100 hover:bg-base-300" style={{ marginTop: '10px', width: '90%' }}>
           <input type="checkbox" />
-          <div className="collapse-title text-sm font-medium text-accent-content">
+          <div className="collapse-title text-sm font-medium text-content">
             დოკუმენტი
           </div>
           <div className="collapse-content">
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <tbody>
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  <tr className="text-content text-xs" key={nanoid()}>
                     <td>comment: {selectedDoc?.comment}</td>
                   </tr>
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  <tr className="text-content text-xs" key={nanoid()}>
                     <td>created_at: {formatDate(selectedDoc?.created_at)}</td>
                   </tr>
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  <tr className="text-content text-xs" key={nanoid()}>
                     <td>documentNumber: {selectedDoc?.documentNumber}</td>
                   </tr>
-                  {/* <tr className="text-accent-content text-xs" key={nanoid()}>
+                  {/* <tr className="text-content text-xs" key={nanoid()}>
                     <td>have_to_sign_users: {selectedDoc?.have_to_sign_users}</td>
                   </tr>
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  <tr className="text-content text-xs" key={nanoid()}>
                     <td>have_to_verify_users: {selectedDoc?.have_to_verify_users}</td>
                   </tr> */}
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  <tr className="text-content text-xs" key={nanoid()}>
                     <td>is_signed: {selectedDoc?.is_signed ? <span className="text-green-500">&#x2713;</span> : <span className="text-red-500">&#x2717;</span>}</td>
                   </tr>
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  <tr className="text-content text-xs" key={nanoid()}>
                     <td>is_verified: {selectedDoc?.is_verified ? <span className="text-green-500">&#x2713;</span> : <span className="text-red-500">&#x2717;</span>}</td>
                   </tr>
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  <tr className="text-content text-xs" key={nanoid()}>
                     <td>owner: {selectedDoc?.owner}</td>
                   </tr>
-                  {/* <tr className="text-accent-content text-xs" key={nanoid()}>
+                  {/* <tr className="text-content text-xs" key={nanoid()}>
                     <td>signed_by_users: {selectedDoc?.signed_by_users}</td>
                   </tr> */}
-                  <tr className="text-accent-content text-xs" key={nanoid()}>
+                  <tr className="text-content text-xs" key={nanoid()}>
                     <td>title: {selectedDoc?.title}</td>
                   </tr>
-                  {/* <tr className="text-accent-content text-xs" key={nanoid()}>
+                  {/* <tr className="text-content text-xs" key={nanoid()}>
                     <td>updated_at: {formatDate(selectedDoc?.updated_at)}</td>
                   </tr> */}
-                  {/* <tr className="text-accent-content text-xs" key={nanoid()}>
+                  {/* <tr className="text-content text-xs" key={nanoid()}>
                     <td>uuid: {selectedDoc?.uuid}</td>
                   </tr> */}
-                  {/* <tr className="text-accent-content text-xs" key={nanoid()}>
+                  {/* <tr className="text-content text-xs" key={nanoid()}>
                     <td>verified_by_users: {selectedDoc?.verified_by_users}</td>
                   </tr> */}
                 </tbody>
@@ -97,9 +97,9 @@ const RightB = ({ selectedDoc, width, setWidth }) => {
           </div>
         </div>
 
-        <div className="collapse collapse-plus bg-base-100 mt-2 w-11/12 bg-base-100 hover:bg-base-300">
+        <div className="collapse collapse-plus bg-base-100 mt-2 w-11/12 hover:bg-base-300">
           <input type="checkbox" />
-          <div className="collapse-title text-sm font-medium text-accent-content">
+          <div className="collapse-title text-sm font-medium text-content">
             ხელმოწერა
           </div>
           <div className="collapse-content">
@@ -139,9 +139,9 @@ const RightB = ({ selectedDoc, width, setWidth }) => {
           </div>
         </div>
 
-        <div className="collapse collapse-plus bg-base-100 mt-2 w-11/12 bg-base-100 hover:bg-base-300">
+        <div className="collapse collapse-plus bg-base-100 mt-2 w-11/12 hover:bg-base-300">
           <input type="checkbox" />
-          <div className="collapse-title text-sm font-medium text-accent-content">
+          <div className="collapse-title text-sm font-medium text-content">
             ვიზირება
           </div>
           <div className="collapse-content">

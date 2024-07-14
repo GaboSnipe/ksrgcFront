@@ -74,7 +74,7 @@ const Login = () => {
         <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
           <div className="bg-dark border border-gray-600 shadow w-full rounded-lg divide-y divide-gray-200">
             <form className="px-5 py-7" onSubmit={proceedLogin}>
-              <label className="font-semibold text-sm pb-1 block text-accent-content">
+              <label className="font-semibold text-sm pb-1 block text-content">
                 E-mail
               </label>
               <input 
@@ -84,7 +84,7 @@ const Login = () => {
                 type="email"
                 className=" rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
               />
-              <label className="font-semibold текст-sm pb-1 block text-accent-content">
+              <label className="font-semibold текст-sm pb-1 block text-content">
                 Password
               </label>
               <input
