@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import "../styles/Header.css";
 import { useSelector } from "react-redux";
-import { DocAdd, DocVerify, DocSign } from "./index.js";
+import { DocAdd, DocVerify, DocSign, Taskcreate } from "./index.js";
 import 'react-toastify/dist/ReactToastify.css';
 import { TiDocumentAdd } from "react-icons/ti";
 import { BsPencil } from "react-icons/bs";
-import { IoSendOutline } from "react-icons/io5";
+import { IoSendOutline, IoCreate  } from "react-icons/io5";
 
 const Header = ({selectedDoc}) => {
   const loginState = useSelector((state) => state.auth.isLoggedIn);
   const [isOpenAddDoc, setIsOpenAddDoc] = useState(false);
   const [isOpenSign, setIsOpenSign] = useState(false);
   const [isOpenVerify, setIsOpenVerify] = useState(false);
+  const [isOpenTask, setIsOpenTask] = useState(false);
 
   const toggleAddDoc = () => {
     setIsOpenAddDoc(!isOpenAddDoc);
@@ -23,6 +24,9 @@ const Header = ({selectedDoc}) => {
   const toggleVerify = () => {
     setIsOpenVerify(!isOpenVerify);
   };
+  const toggleTask = () => {
+    setIsOpenTask(!isOpenTask);
+  };
 
 
 
@@ -33,7 +37,7 @@ const Header = ({selectedDoc}) => {
     style={{ height: "10vh", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}
   >
     <div className="container text-base navlinks-container py-1" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "inherit" }}>
-      <button onClick={toggleAddDoc} className="btn text-sm bg-transparent hover:bg-gray-800 px-4 h-full flex items-center justify-center flex-col">
+      {/* <button onClick={toggleAddDoc} className="btn text-sm bg-transparent hover:bg-gray-800 px-4 h-full flex items-center justify-center flex-col">
         <TiDocumentAdd size={42}/>
         <div>დოკუმენტის დამატება</div>
       </button>
@@ -44,6 +48,10 @@ const Header = ({selectedDoc}) => {
       <button onClick={toggleVerify} className="btn text-sm bg-transparent hover:bg-gray-800 px-4 h-full flex items-center justify-center flex-col" style={{maxHeight: "-webkit-fill-available;"}}>
         <IoSendOutline size={42} />
         <div>ვიზირებაზე გაგზავნა</div>
+      </button> */}
+      <button onClick={toggleTask} className="btn text-sm bg-transparent hover:bg-gray-800 px-4 h-full flex items-center justify-center flex-col" style={{maxHeight: "-webkit-fill-available;"}}>
+        <IoCreate size={42} />
+        <div>დავალების შექმნა</div>
       </button>
     </div>
   </div>
@@ -69,6 +77,14 @@ const Header = ({selectedDoc}) => {
       <div className="fixed inset-0 flex items-center justify-center z-50">
         <div className="popup-backdrop" onClick={toggleVerify}></div>
         <DocVerify selectedDoc={selectedDoc}/>
+      </div>
+    </>
+  )}
+  {isOpenTask && (
+    <>
+      <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="popup-backdrop" onClick={toggleTask}></div>
+        <Taskcreate selectedDoc={selectedDoc}/>
       </div>
     </>
   )}

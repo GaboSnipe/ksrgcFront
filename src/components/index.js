@@ -13,4 +13,6 @@ export { default as FolderIcon } from "./FolderIcon";
 export { default as FileList } from "./FileList";
 export { default as Inbox } from "./Inbox";
 export { default as FolderCreatePage } from "./FolderCreatePage";
+export { default as FileAddPage } from "./FileAddPage";
+export { default as Taskcreate } from "./Taskcreate";
 

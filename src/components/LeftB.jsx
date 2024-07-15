@@ -98,6 +98,36 @@ const LeftB = ({ setAllDocView, setActiveObj, setIsFileList, setFileList, active
       console.error(error);
     }
   };
+  const getCreator = async (userId) => {
+    try {
+      const response = await axios.get(`/api/tasks/list/?offset=0&limit=20&creator=${userId}`);
+      setDocList(response.data.results);
+      setListMax(response.data.count);
+      setActiveObj(ActiveObj.ALLDOC);
+
+      setLastUrl('signReceived');
+      setchoseText("ხელმოწერა - დავავალე");
+      setLastPagination(0);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const getAssignTo = async (userId) => {
+    try {
+      const response = await axios.get(`/api/tasks/list/?offset=0&limit=20&assign_to=${userId}`);
+      setDocList(response.data.results);
+      setListMax(response.data.count);
+      setActiveObj(ActiveObj.ALLDOC);
+
+      setLastUrl('signReceived');
+      setchoseText("ხელმოწერა - დავავალე");
+      setLastPagination(0);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
   const viewAllDoc = () => {
@@ -151,7 +181,7 @@ const LeftB = ({ setAllDocView, setActiveObj, setIsFileList, setFileList, active
 
 
 
-        <div className="collapse collapse-plus bg-base-100 hover:bg-base-300" style={{ marginTop: '10px', width: '90%' }}>
+        {/* <div className="collapse collapse-plus bg-base-100 hover:bg-base-300" style={{ marginTop: '10px', width: '90%' }}>
           <input type="checkbox" />
           <div className="collapse-title text-sm font-medium text-content">
             ვიზირება
@@ -207,6 +237,40 @@ const LeftB = ({ setAllDocView, setActiveObj, setIsFileList, setFileList, active
                     <td>
                       <button
                         onClick={() => signSentToUser(userObj?.id)}
+                        className="text-content text-xs">
+                        დავავალე
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div> */}
+
+
+        <div className="collapse collapse-plus bg-base-100 hover:bg-base-300" style={{ marginTop: '10px', width: '90%' }}>
+          <input type="checkbox" />
+          <div className="collapse-title text-sm font-medium text-content">
+            დავალებები
+          </div>
+          <div className="collapse-content">
+            <div className="overflow-x-auto">
+              <table>
+                <tbody>
+                  <tr className="text-content" key={nanoid()}>
+                    <td>
+                      <button
+                        onClick={() => getAssignTo(userObj?.id)}
+                        className="text-content text-xs">
+                        დამევალა
+                      </button>
+                    </td>
+                  </tr>
+                  <tr className="text-content" key={nanoid()}>
+                    <td>
+                      <button
+                        onClick={() => getCreator(userObj?.id)}
                         className="text-content text-xs">
                         დავავალე
                       </button>

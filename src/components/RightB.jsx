@@ -1,10 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import { format } from 'date-fns';
 import { nanoid } from "nanoid";
+import axios from "../axios";
 
-const RightB = ({ selectedDoc, width, setWidth }) => {
+const RightB = ({ selectedDoc, width, setWidth, setChoosedFileUuid, choosedFileUuid}) => {
   const resizerRef = useRef(null);
   const rightBRef = useRef(null);
+  const [folderInfo, setFolderInfo] = useState(null);
 
   useEffect(() => {
     const handleMouseMove = (event) => {
@@ -35,6 +37,19 @@ const RightB = ({ selectedDoc, width, setWidth }) => {
       }
     };
   }, [setWidth]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/expertise/folder/${choosedFileUuid}/details/`);
+        setFolderInfo(response.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      console.log(folderInfo);
+      
+    };
+    fetchData();
+  }, [choosedFileUuid]);
 
   const formatDate = (date) => {
     return date ? format(new Date(date), 'dd MMM yyyy, HH:mm') : '';
@@ -94,6 +109,55 @@ const RightB = ({ selectedDoc, width, setWidth }) => {
                 </tbody>
               </table>
             </div>
+
+          </div>
+        </div>
+        <div className="collapse collapse-plus bg-base-100 hover:bg-base-300" style={{ marginTop: '10px', width: '90%' }}>
+          <input type="checkbox" />
+          <div className="collapse-title text-sm font-medium text-content">
+            folder info
+          </div>
+          <div className="collapse-content">
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <tbody>
+                  <tr className="text-content text-xs" key={nanoid()}>
+                    <td>case: {folderInfo?.case}</td>
+                  </tr>
+                  <tr className="text-content text-xs" key={nanoid()}>
+                    <td>comment: {folderInfo?.comment}</td>
+                  </tr>
+                  <tr className="text-content text-xs" key={nanoid()}>
+                    <td>created_at: {formatDate(folderInfo?.created_at)}</td>
+                  </tr>
+                  <tr className="text-content text-xs" key={nanoid()}>
+                    <td>customer: {folderInfo?.customer}</td>
+                  </tr>
+                  <tr className="text-content text-xs" key={nanoid()}>
+                    <td>files: {folderInfo?.files }</td>
+                  </tr>
+                  <tr className="text-content text-xs" key={nanoid()}>
+                    <td>path: {folderInfo?.path}</td>
+                  </tr>
+                  <tr className="text-content text-xs" key={nanoid()}>
+                    <td>status: {folderInfo?.status}</td>
+                  </tr>
+                  <tr className="text-content text-xs" key={nanoid()}>
+                    <td>tags: {folderInfo?.tags}</td>
+                  </tr>
+                  <tr className="text-content text-xs" key={nanoid()}>
+                    <td>title: {folderInfo?.title}</td>
+                  </tr>
+                  <tr className="text-content text-xs" key={nanoid()}>
+                    <td>updated_at: {folderInfo?.updated_at}</td>
+                  </tr>
+                  <tr className="text-content text-xs" key={nanoid()}>
+                    <td>uuid: {folderInfo?.uuid}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
           </div>
         </div>
 

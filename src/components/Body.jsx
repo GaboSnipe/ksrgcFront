@@ -26,6 +26,8 @@ const Body = ({
   setFileList,
   setIsFileList,
   isFileList,
+  choosedFileUuid, 
+  setChoosedFileUuid,
 }) => {
   const handleClick = (doc) => {
     setSelectedDoc(doc);
@@ -57,7 +59,7 @@ const Body = ({
   }, [urlList]);
   const contentComponents = {
     [ActiveObj.WORKSPACE]: (
-      <FileList setchoseText={setchoseText} choseText={choseText} setFileList={setFileList} fileList={fileList} isFileList={isFileList}  setIsFileList={setIsFileList}/>
+      <FileList setchoseText={setchoseText} choosedFileUuid={choosedFileUuid} setChoosedFileUuid={setChoosedFileUuid} choseText={choseText} setFileList={setFileList} fileList={fileList} isFileList={isFileList}  setIsFileList={setIsFileList}/>
       
     ),
     [ActiveObj.ALLDOC]: (

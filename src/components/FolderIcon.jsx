@@ -2,7 +2,7 @@ import React from 'react';
 import axios from "../axios";
 import { FaFolder } from 'react-icons/fa';
 
-const FolderIcon = ({ name, setFileList, choseText, setchoseText, uuid, setIsFileList }) => {
+const FolderIcon = ({ name, setFileList, choseText, setchoseText, uuid, setIsFileList, setChoosedFileUuid }) => {
 
   const fetchData = async () => {
     try {
@@ -14,15 +14,21 @@ const FolderIcon = ({ name, setFileList, choseText, setchoseText, uuid, setIsFil
     setIsFileList(true);
     if (choseText) {
       setchoseText(choseText + " - " + name);
-  }
+    }
+    setChoosedFileUuid(uuid);
   };
   return (
-<div className="flex flex-col items-center">
-  <button onClick={fetchData}>
-    <FaFolder className="text-yellow-500 text-6xl" />
-  </button>
-  <span className="mt-2 text-sm text-content max-w-[5rem] truncate">{name}</span>
-</div>
+    <div className="relative flex flex-col items-center justify-center">
+      <button onClick={fetchData} className="relative">
+        <div>
+          <FaFolder className="text-yellow-500 text-6xl" />
+
+        </div>
+      </button>
+      <span className="mt-2 text-sm text-content max-w-[5rem] truncate">{name}</span>
+
+    </div>
+
 
   );
 };

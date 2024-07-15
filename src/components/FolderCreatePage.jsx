@@ -12,9 +12,10 @@ const FolderCreatePage = ({folderCreateShow, setSeeFolderCreate}) => {
 
     
   const ToList = {
-    TODO: "todo",
-    ARVICIMETIRA: "ar vici meti ra",
-    MARTOTODOMUSHAOBS: "marto todo mushaobs"
+    TODO: "To Do",
+    INPROGRESS: "In Progress",
+    DONE: "Done",
+    UNCERTAIN: "Uncertain"
   }
 
     const folderCreate = async () =>{
@@ -85,8 +86,8 @@ const FolderCreatePage = ({folderCreateShow, setSeeFolderCreate}) => {
                             style={{ maxHeight: '40vh', minHeight: '15vh', overflowY: 'auto' }}
                         />
                     </div>
-                    <div className="grid grid-cols-2 gap-4 py-2 items-center">
-                            <label htmlFor="stat" className="text-xl font-medium text-gray-700 col-span-1 ml-5">Status</label>
+                    {/* <div className="grid grid-cols-2 gap-4 py-2 items-center">
+                            <label htmlFor="stat" className="text-xl font-medium col-span-1 ml-5">Status</label>
                             <div className="relative col-span-1">
                                 <div className="flex flex-wrap border rounded-lg px-3 py-2 mt-1 text-sm w-full p-4" style={{ backgroundColor: "#121212" }}>
                                     <select
@@ -101,7 +102,7 @@ const FolderCreatePage = ({folderCreateShow, setSeeFolderCreate}) => {
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     <div className="flex justify-center py-2">
                         <button
                             type="button"

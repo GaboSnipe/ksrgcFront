@@ -21,6 +21,7 @@ const Home = () => {
   const [choseText, setchoseText] = useState("ყველა");
   const [fileList, setFileList] = useState([]);
   const [isFileList, setIsFileList] = useState(false);
+  const [choosedFileUuid, setChoosedFileUuid] = useState("");
 
   const pageMax = 10;
 
@@ -29,7 +30,7 @@ const Home = () => {
       try {
         const response = await axios.get('/api/accounts/auth/users/me/');
         setUserObj(response?.data);
-        setUserId(response?.data?.id); // Set userId after userObj is fetched
+        setUserId(response?.data?.id);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -121,6 +122,8 @@ const Home = () => {
           fileList={fileList}
           setIsFileList={setIsFileList}
           isFileList={isFileList}
+          setChoosedFileUuid={setChoosedFileUuid}
+          choosedFileUuid={choosedFileUuid}
         />
 
         {rightBWidth < 10 ? (
@@ -134,6 +137,8 @@ const Home = () => {
           <RightB
             selectedDoc={selectedDoc}
             width={rightBWidth}
+            setChoosedFileUuid={setChoosedFileUuid}
+            choosedFileUuid={choosedFileUuid}
             setWidth={setAndStoreRightBWidth}
           />
         )}
