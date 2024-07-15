@@ -117,7 +117,7 @@ const Body = ({
         </>
     ),
     [ActiveObj.INBOX]: (
-      <Inbox />
+      <Inbox fileList={fileList}/>
     ),
   };
 

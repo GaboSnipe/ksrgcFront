@@ -12,15 +12,18 @@ const FolderIcon = ({ name, setFileList, choseText, setchoseText, uuid, setIsFil
       console.error('Error:', error);
     }
     setIsFileList(true);
-    setchoseText(choseText + " - " + name );
+    if (choseText) {
+      setchoseText(choseText + " - " + name);
+  }
   };
   return (
-    <div className="flex flex-col items-center">
-      <button onClick={fetchData}>
-      <FaFolder  className="text-yellow-500 text-6xl" />
-      </button>
-      <span className="mt-2 text-sm text-content">{name}</span>
-    </div>
+<div className="flex flex-col items-center">
+  <button onClick={fetchData}>
+    <FaFolder className="text-yellow-500 text-6xl" />
+  </button>
+  <span className="mt-2 text-sm text-content max-w-[5rem] truncate">{name}</span>
+</div>
+
   );
 };
 
